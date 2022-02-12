@@ -1,4 +1,13 @@
 console.log("Imported 'Brass.js'");
+
+/*
+The `BRASS_FINGERINGS` constant provides *mostly* binary representations of
+fingerings for all of the brass intruments. The `TROMBONE` object is the sole
+exception. This is due to trombones using slide positions, 1 being all-the-way
+in and 7 being fully extended, rather than fingerings that would be seen on
+other brass instruments. Above each object are comments containing labels for
+matching the binary number to fingerings.
+*/
 const BRASS_FINGERINGS = {
     TRUMPET: {//  123
         C4:     0b000,
@@ -45,7 +54,7 @@ const BRASS_FINGERINGS = {
         B3:     0o4,
         C4:     0o3
     },
-    BARITONE: {
+    BARITONE: {// 123
         C3:     0b101,
         CS3:    0b011,
         D3:     0b110,
@@ -60,7 +69,7 @@ const BRASS_FINGERINGS = {
         B3:     0b110,
         C4:     0b100
     },
-    TUBA: {
+    TUBA: { //    123
         C2:     0b101,
         CS2:    0b011,
         D2:     0b110,

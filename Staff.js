@@ -119,6 +119,7 @@ class Staff {
     }
 }
 
+// Enharmonic pairs object for adding additional accidental support
 const enharmonicPairs = {
     "C#": "Db",
     "D#": "Eb",
@@ -129,6 +130,15 @@ const enharmonicPairs = {
     "E#": "F"
 }
 
+/* 
+The following two objects, `TrebleGrid` and `BassGrid` create a
+pseudo-coordinate system to easily quantify note placement on the staff.
+The origin is defined as the top line of the staff. In `TrebleGrid`, this is F5.
+In `BassGrid`, this is A3. In both grids, descending down in pitch will result
+in a *higher* coordinate number. Notes that go above the origin (in the ledger
+lines above the staff) will have a negative coordinate value. See
+`dev-ref/coordinates_example.md` for a visual explanation.
+*/
 const TrebleGrid = {
     "C6": -4,
     "B5": -3,
