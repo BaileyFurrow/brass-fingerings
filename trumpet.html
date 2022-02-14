@@ -2,11 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=">
     <title>Brass Fingerings</title>
     <link rel="stylesheet" href="main.css">
-    <script src="./Brass.js"></script>
     <script>var fingers = [false, false, false], horn=false;</script>
 </head>
 <body>
@@ -49,103 +46,6 @@
         <button onclick="showCorrectNote()">Show Note</button>
     </div>
 
-     <script>
-
-        // TODO: Refactor all JS code to separate file
-
-         var inst, instValue;
-
-         function instSelection() {
-            instValue = document.getElementById("instSelect").value;
-            inst = BRASS[instValue];
-            document.getElementById("fingering-app").style.display = "block";
-            document.getElementById("instName").innerHTML = inst.getName();
-            hornHide(instValue != "horn");
-            reset();
-         }
-
-        function hornHide(isHidden) {
-            let circles = document.getElementById("circles").children;
-            for (let i=0; i<circles.length; i++) {
-                let circle = circles[i];
-                circle.attributes.cx.value = 50 - (100*isHidden) + i*100;
-                console.log(50-100*isHidden);
-            }
-        }
-        
-        var currentNote;
-
-        // Fingering Action
-        let circles = document.getElementById("circles").children;
-        for (let i = 0; i < circles.length; i++) {
-            let circle = circles[i];
-            let defaultColor = () => {
-                if (fingers[i]) circle.style.fill = "#222222";
-                if (!fingers[i]) circle.style.fill = "white";
-            }
-
-            circle.addEventListener("mouseover", () => {
-                circle.style.fill = "#787878";
-            });
-            circle.addEventListener("mouseout", () => {
-                defaultColor();
-            })
-
-            circle.addEventListener("click", c => {
-                fingers[i] = !fingers[i];
-                defaultColor();
-                });
-        }
-
-         function toBinary(list) {
-             let a = list.reduce((total, current, i) => total + current * Math.pow(2, i));
-             return a.toString(2).split("").reverse().join("").padEnd(4, "0");
-         }
-
-         function showBinary() {
-            document.getElementById("test").innerHTML = toBinary(fingers);
-         }
-         
-
-         function newNote() {
-            reset();
-            let max = 12;
-            let rand = Math.floor(Math.random() * max);
-            let brassFingers = inst.fingerSet;
-            let note = Object.keys(brassFingers)[rand];
-            currentNote = [note, brassFingers[note]];
-            
-            console.log(currentNote);
-
-            document.getElementById("noteName").innerHTML = currentNote[0].replace("S", "#");
-         }
-
-         function reset() {
-             document.getElementById("noteName").innerHTML = "";
-             document.getElementById("isCorrect").innerHTML = "";
-             fingers = [false,false,false]
-             for (let i = 0; i < circles.length; i++) {
-                 circles[i].style.fill = "white";
-                 circles[i].setAttribute("stroke", "black");
-             }
-             
-         }
-
-         function checkNote() {
-            let note = currentNote[1], ans = parseInt(toBinary(fingers), 2), ansText = document.getElementById("isCorrect");
-            if (note == ans) ansText.innerHTML = "YES!!!";
-            else ansText.innerHTML = "no.";
-         }
-
-         function showCorrectNote() {
-             let note = currentNote[1].toString(2).padStart(4, "0");
-             console.log(note, note.length);
-             for (let i = 0; i < note.length; i++) {
-                 console.log(circles[i]);
-                 if (parseInt(note[i], 2) == 1) circles[i].setAttribute("stroke", "red");
-             }
-         }
-
-    </script>
+    <script src="./Brass.js"></script>
 </body>
 </html>
