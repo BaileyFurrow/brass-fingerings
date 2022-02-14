@@ -89,7 +89,7 @@ function checkNote() {
 }
 
 function showCorrectNote() {
-    let note = currentNote[1].toString(2).padStart(4, "0");
+    let note = currentNote[1][0].toString(2).padStart(4, "0");
     console.log(note, note.length);
     for (let i = 0; i < note.length; i++) {
         console.log(circles[i]);
