@@ -64,6 +64,10 @@ function newNote() {
     let note = Object.keys(brassFingers)[rand];
     currentNote = [note, brassFingers[note]];
 
+    const objNote = new Note(inst.isTreble, note);
+    const staff = new Staff(objNote);
+    staff.drawNote();
+
     console.log(currentNote);
 
     document.getElementById("noteName").innerHTML = currentNote[0].replace("S", "#");
@@ -102,84 +106,85 @@ The `BRASS_FINGERINGS` constant provides *mostly* binary representations of
 fingerings for all of the brass intruments. The `TROMBONE` object is the sole
 exception. This is due to trombones using slide positions, 1 being all-the-way
 in and 7 being fully extended, rather than fingerings that would be seen on
-other brass instruments. Above each object are comments containing labels for
-matching the binary number to fingerings.
+other brass instruments. The numbered keys are the notes' midi values. 
+Above each object are comments containing labels for matching the binary number
+to fingerings.
 */
 const BRASS_FINGERINGS = {
     TRUMPET: {//  123
-        C4:     [0b000],
-        CS4:    [0b111],
-        D4:     [0b101],
-        DS4:    [0b011],
-        E4:     [0b110],
-        F4:     [0b100],
-        FS4:    [0b010],
-        G4:     [0b000],
-        GS4:    [0b011],
-        A4:     [0b110],
-        AS4:    [0b100],
-        B4:     [0b010],
-        C5:     [0b000]
+        60:    [0b000],     // C4
+        61:    [0b111],
+        62:    [0b101],
+        63:    [0b011],
+        64:    [0b110],
+        65:    [0b100],
+        66:    [0b010],
+        67:    [0b000],
+        68:    [0b011],
+        69:    [0b110],
+        70:    [0b100],
+        71:    [0b010],
+        72:    [0b000]
     },
     HORN: { //    T123
-        C4:     [0b0000],
-        CS4:    [0b0110],
-        D4:     [0b0100],
-        DS4:    [0b0010],
-        E4:     [0b0000],
-        F4:     [0b0100],
-        FS4:    [0b0010],
-        G4:     [0b0000],
-        GS4:    [0b1011],
-        A4:     [0b1110],
-        AS4:    [0b1100],
-        B4:     [0b1010],
-        C5:     [0b1000]
+        60:    [0b0000],    // C4
+        61:    [0b0110],
+        62:    [0b0100],
+        63:    [0b0010],
+        64:    [0b0000],
+        65:    [0b0100],
+        66:    [0b0010],
+        67:    [0b0000],
+        68:    [0b1011],
+        69:    [0b1110],
+        70:    [0b1100],
+        71:    [0b1010],
+        72:    [0b1000]
     },
     TROMBONE: {
-        C3:     [0o6],
-        CS3:    [0o5],
-        D3:     [0o4],
-        DS3:    [0o3],
-        E3:     [0o2],
-        F3:     [0o1],
-        FS3:    [0o5],
-        G3:     [0o4],
-        GS3:    [0o3],
-        A3:     [0o2],
-        AS3:    [0o1],
-        B3:     [0o4],
-        C4:     [0o3]
+        48:    [0o6],       // C3
+        49:    [0o5],
+        50:    [0o4],
+        51:    [0o3],
+        52:    [0o2],
+        53:    [0o1],
+        54:    [0o5],
+        55:    [0o4],
+        56:    [0o3],
+        57:    [0o2],
+        58:    [0o1],
+        59:    [0o4],
+        60:    [0o3]
     },
     BARITONE: {// 123
-        C3:     [0b101],
-        CS3:    [0b011],
-        D3:     [0b110],
-        DS3:    [0b100],
-        E3:     [0b010],
-        F3:     [0b000],
-        FS3:    [0b011],
-        G3:     [0b110],
-        GS3:    [0b100],
-        A3:     [0b010],
-        AS3:    [0b000],
-        B3:     [0b110],
-        C4:     [0b100]
+        48:    [0b101],     // C3
+        49:    [0b011],
+        50:    [0b110],
+        51:    [0b100],
+        52:    [0b010],
+        53:    [0b000],
+        54:    [0b011],
+        55:    [0b110],
+        56:    [0b100],
+        57:    [0b010],
+        58:    [0b000],
+        59:    [0b110],
+        60:    [0b100]
     },
     TUBA: { //    123
-        C2:     [0b101],
-        CS2:    [0b011],
-        D2:     [0b110],
-        DS2:    [0b100],
-        E2:     [0b010],
-        F2:     [0b000],
-        FS2:    [0b011],
-        G2:     [0b110],
-        GS2:    [0b100],
-        A2:     [0b010],
-        AS2:    [0b000],
-        B2:     [0b110],
-        C3:     [0b100]
+        36:    [0b101],     // C2
+        37:    [0b011],
+        38:    [0b110],
+        39:    [0b100],
+        40:    [0b010],
+        41:    [0b000],
+        42:    [0b011],
+        43:    [0b110],
+        44:    [0b100],
+        45:    [0b010],
+        46:    [0b000],
+        47:    [0b110],
+        48:    [0b100]
     }
 };
 
