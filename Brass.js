@@ -7,6 +7,7 @@ var inst, instValue;
 function instSelection() {
     instValue = document.getElementById("instSelect").value;
     inst = BRASS[instValue];
+    Staff.drawClef(inst.isTreble);
     document.getElementById("fingering-app").style.display = "block";
     document.getElementById("instName").innerHTML = inst.getName();
     hornHide(instValue != "horn");
@@ -70,7 +71,7 @@ function newNote() {
 
     console.log(currentNote);
 
-    document.getElementById("noteName").innerHTML = currentNote[0].replace("S", "#");
+    document.getElementById("noteName").innerHTML = Note.midiToPitch(note);
 }
 
 function reset() {

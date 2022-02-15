@@ -54,7 +54,7 @@ class Staff {
         let [x,y] = currentNote.location;
 
         // Place clef on staff
-        this.drawClef(currentNote.isTreble);
+        this.constructor.drawClef(currentNote.isTreble);
         
         
         // Place sharp and show/hide based on midi value
@@ -117,7 +117,7 @@ class Staff {
         });
     }
 
-    drawClef(isTreble) {
+    static drawClef(isTreble) {
         let clef = document.getElementById("clef");
         if (isTreble) {
             clef.setAttributeNS(null, "href", "#treble");
