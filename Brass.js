@@ -52,10 +52,6 @@ function toBinary(list) {
     return a.toString(2).split("").reverse().join("").padEnd(4, "0");
 }
 
-function showBinary() {
-    document.getElementById("test").innerHTML = toBinary(fingers);
-}
-
 
 function newNote() {
     reset();

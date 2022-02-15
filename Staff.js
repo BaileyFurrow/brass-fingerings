@@ -136,7 +136,7 @@ class Staff {
         }
         else {
             clef.setAttributeNS(null, "href", "#bass");
-            clef.setAttributeNS(null, "y", 19);
+            clef.setAttributeNS(null, "y", 20);
             clef.setAttributeNS(null, "transform", "scale(20)");
         }
     }
