@@ -22,7 +22,7 @@ function hornHide(isHidden) {
     }
 }
 
-var currentNote;
+let currentNote;
 
 // Fingering Action
 let circles = document.getElementById("circles").children;

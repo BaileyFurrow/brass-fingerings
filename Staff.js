@@ -1,20 +1,21 @@
 class Note {
     constructor(isTreble, midi) {
         this.isTreble = isTreble;
-        this.midi = midi;
+        this.midi = Number(midi);
 
         this.note = this.constructor.midiToPitch(this.midi);
         this.hasAccidental = this.note.includes("#");
         
         this.noteNoAccidental = this.note.replace("#", "");
 
-        let grid = this.isTreble ? TrebleGrid : BassGrid;
-        this.noteCoord = grid[this.noteNoAccidental];
+        this.grid = this.isTreble ? TrebleGrid : BassGrid;
+        this.noteCoord = this.grid[this.noteNoAccidental];
     }
 
     get clef() {
         return this.isTreble ? "Treble" : "Bass";
     }
+
 
     get location() {
         let x = 0;
@@ -41,20 +42,82 @@ class Note {
 }
 
 class Staff {
-    constructor(clef) {
-        this.clef = clef;
+    constructor(note) {
+        this.note = note;
     }
 
-    drawNote(midi, isSharp) {
+    drawNote() {
         // Pull values from input boxes
-        let isTreble = this.clef == "treble";
-        let midiNumber = midi;
 
         // Create Note object and calculate location
-        let currentNote = new Note(isTreble, midiNumber);
+        let currentNote = this.note;
         let [x,y] = currentNote.location;
 
         // Place clef on staff
+        this.drawClef(currentNote.isTreble);
+        
+        
+        // Place sharp and show/hide based on midi value
+        let accidental = document.getElementById("accidental");
+        accidental.setAttributeNS(null, "href", "#sharp");
+        accidental.setAttributeNS(null, "x", x);
+        accidental.setAttributeNS(null, "y", y);
+        if (currentNote.hasAccidental)
+            accidental.setAttributeNS(null, "style", "display: initial");
+        else
+            accidental.setAttributeNS(null, "style", "display: none");
+    
+        // Place note head
+        let noteHead = document.getElementById("noteArea");
+        noteHead.setAttributeNS(null, "href", "#note");
+        noteHead.setAttributeNS(null, "x", x);
+        noteHead.setAttributeNS(null, "y", y);
+
+        // Clear all ledger lines
+        this.clearLedgerLines();
+
+        // Place upper ledger line(s) as needed
+        this.drawUpperLedger(currentNote);
+
+        // Place lower ledger line(s) as needed
+        this.drawLowerLedger(currentNote);
+
+    }
+
+    drawLowerLedger(currentNote) {
+        if (currentNote.noteCoord > 9) {
+            let elem;
+            for (let i = 0; i < Math.abs(Math.floor(currentNote.noteCoord / 2)) - 3; i++) {
+                elem = document.createElementNS("http://www.w3.org/2000/svg", "use");
+                elem.setAttributeNS(null, "href", "#lowerLedger");
+                elem.setAttributeNS(null, "x", 130 * Math.abs(currentNote.noteCoord % 2));
+                elem.setAttributeNS(null, "y", 100 * i);
+                document.getElementById("lowerLedgers").append(elem);
+            }
+        }
+    }
+
+    drawUpperLedger(currentNote) {
+        if (currentNote.noteCoord < -1) {
+            let elem;
+            for (let i = 0; i < Math.abs(Math.ceil(currentNote.noteCoord / 2)); i++) {
+                elem = document.createElementNS("http://www.w3.org/2000/svg", "use");
+                elem.setAttributeNS(null, "href", "#upperLedger");
+                elem.setAttributeNS(null, "x", 130 * Math.abs(currentNote.noteCoord % 2));
+                elem.setAttributeNS(null, "y", -100 * i);
+                document.getElementById("upperLedgers").append(elem);
+            }
+        }
+    }
+
+    clearLedgerLines() {
+        let ledgers = document.querySelectorAll("use[href='#upperLedger'], use[href='#lowerLedger']");
+        ledgers.forEach((i) => {
+            i.remove();
+        });
+    }
+
+    drawClef(isTreble) {
         let clef = document.getElementById("clef");
         if (isTreble) {
             clef.setAttributeNS(null, "href", "#treble");
@@ -66,56 +129,6 @@ class Staff {
             clef.setAttributeNS(null, "y", 19);
             clef.setAttributeNS(null, "transform", "scale(20)");
         }
-        
-        
-        // Place sharp and show/hide based on midi value
-        if (!currentNote.hasAccidental) { 
-            let accidental = document.getElementById("accidental");
-            accidental.setAttributeNS(null, "href", "#sharp");
-            accidental.setAttributeNS(null, "x", x);
-            accidental.setAttributeNS(null, "y", y);
-            if (currentNote.hasAccidental)
-                accidental.setAttributeNS(null, "style", "display: initial");
-            else
-                accidental.setAttributeNS(null, "style", "display: none");
-        }
-        
-        // Place note head
-        let noteHead = document.getElementById("noteArea");
-        noteHead.setAttributeNS(null, "href", "#note");
-        noteHead.setAttributeNS(null, "x", x);
-        noteHead.setAttributeNS(null, "y", y);
-
-        // Clear all ledger lines
-        let ledgers = document.querySelectorAll("use[href='#upperLedger'], use[href='#lowerLedger']");
-        ledgers.forEach((i) => {
-            i.remove();
-        })
-
-        // Place upper ledger line(s) as needed
-        if (currentNote.noteCoord < -1) {
-            let elem;
-            for (let i = 0; i < Math.abs(Math.ceil(currentNote.noteCoord / 2)); i++) {
-                elem = document.createElementNS("http://www.w3.org/2000/svg", "use");
-                elem.setAttributeNS(null, "href", "#upperLedger");
-                elem.setAttributeNS(null, "x", 130 * Math.abs(currentNote.noteCoord % 2));
-                elem.setAttributeNS(null, "y", -100 * i);
-                document.getElementById("upperLedgers").append(elem);
-            }
-        }
-
-        // Place lower ledger line(s) as needed
-        if (currentNote.noteCoord > 9) {
-            let elem;
-            for (let i = 0; i < Math.abs(Math.floor(currentNote.noteCoord / 2)) - 3; i++) {
-                elem = document.createElementNS("http://www.w3.org/2000/svg", "use");
-                elem.setAttributeNS(null, "href", "#lowerLedger");
-                elem.setAttributeNS(null, "x", 130 * Math.abs(currentNote.noteCoord % 2));
-                elem.setAttributeNS(null, "y", 100 * i);
-                document.getElementById("lowerLedgers").append(elem);
-            }
-        }
-
     }
 }
 
