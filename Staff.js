@@ -44,6 +44,7 @@ class Note {
 class Staff {
     constructor(note) {
         this.note = note;
+        this.viewbox = [0,300,1000,700];
     }
 
     drawNote() {
@@ -52,6 +53,7 @@ class Staff {
         // Create Note object and calculate location
         let currentNote = this.note;
         let [x,y] = currentNote.location;
+
 
         // Place clef on staff
         this.constructor.drawClef(currentNote.isTreble);
@@ -82,11 +84,16 @@ class Staff {
         // Place lower ledger line(s) as needed
         this.drawLowerLedger(currentNote);
 
+        // Set proper dimensions for SVG
+        let svg = document.getElementById("staffArea");
+        svg.setAttribute("viewBox", this.viewbox.join());
+
     }
 
     drawLowerLedger(currentNote) {
         if (currentNote.noteCoord > 9) {
             let elem;
+            this.viewbox[3] = currentNote.noteCoord * 100 / 1.5;
             for (let i = 0; i < Math.abs(Math.floor(currentNote.noteCoord / 2)) - 3; i++) {
                 elem = document.createElementNS("http://www.w3.org/2000/svg", "use");
                 elem.setAttributeNS(null, "href", "#lowerLedger");
@@ -100,6 +107,9 @@ class Staff {
     drawUpperLedger(currentNote) {
         if (currentNote.noteCoord < -1) {
             let elem;
+            let adjustViewbox = currentNote.noteCoord * 100 / 2;
+            this.viewbox[1] += adjustViewbox;
+            this.viewbox[3] -= adjustViewbox;
             for (let i = 0; i < Math.abs(Math.ceil(currentNote.noteCoord / 2)); i++) {
                 elem = document.createElementNS("http://www.w3.org/2000/svg", "use");
                 elem.setAttributeNS(null, "href", "#upperLedger");

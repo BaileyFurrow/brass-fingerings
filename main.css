@@ -3,11 +3,12 @@
 }
 
 #staffArea {
-    float: left;
+    background-color: aliceblue;
+    /* float: left; */
     margin: 5px;
 }
 
 #userInput {
-    float: left;
+    /* float: left; */
     margin: 5px;
 }
