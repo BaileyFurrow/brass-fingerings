@@ -56,29 +56,31 @@
             <g id="upperLedgers"></g>
             <g id="lowerLedgers"></g>
         </svg>
-        <svg width="800" height="200" xmlns="http://www.w3.org/2000/svg">
-            <g id="circles" stroke-width="3" fill="white">
-                <ellipse stroke="black" id="r0" cx="50" cy="100" rx="40" ry="80" />
-                <ellipse stroke="black" id="r1" cx="150" cy="100" rx="40" ry="40" />
-                <ellipse stroke="black" id="r2" cx="250" cy="100" rx="40" ry="40" />
-                <ellipse stroke="black" id="r3" cx="350" cy="100" rx="40" ry="40" />
-            </g>
-            <!-- <g id="trbCircles" style="display: none" stroke-width="3" fill="white">
-                <circle id="p1" stroke="black" cy="100" r="40" cx="50"></circle>
-                <circle id="p2" stroke="black" cy="100" r="40" cx="150"></circle>
-                <circle id="p3" stroke="black" cy="100" r="40" cx="250"></circle>
-                <circle id="p4" stroke="black" cy="100" r="40" cx="350"></circle>
-                <circle id="p5" stroke="black" cy="100" r="40" cx="450"></circle>
-                <circle id="p6" stroke="black" cy="100" r="40" cx="550"></circle>
-                <circle id="p7" stroke="black" cy="100" r="40" cx="650"></circle>
-            </g> -->
-        </svg>
+        <div id="userInput">
+            <svg id="fingeringArea" width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+                <g id="circles" stroke-width="3" fill="white">
+                    <ellipse stroke="black" id="r0" cx="50" cy="100" rx="40" ry="80" />
+                    <ellipse stroke="black" id="r1" cx="150" cy="100" rx="40" ry="40" />
+                    <ellipse stroke="black" id="r2" cx="250" cy="100" rx="40" ry="40" />
+                    <ellipse stroke="black" id="r3" cx="350" cy="100" rx="40" ry="40" />
+                </g>
+                <!-- <g id="trbCircles" style="display: none" stroke-width="3" fill="white">
+                    <circle id="p1" stroke="black" cy="100" r="40" cx="50"></circle>
+                    <circle id="p2" stroke="black" cy="100" r="40" cx="150"></circle>
+                    <circle id="p3" stroke="black" cy="100" r="40" cx="250"></circle>
+                    <circle id="p4" stroke="black" cy="100" r="40" cx="350"></circle>
+                    <circle id="p5" stroke="black" cy="100" r="40" cx="450"></circle>
+                    <circle id="p6" stroke="black" cy="100" r="40" cx="550"></circle>
+                    <circle id="p7" stroke="black" cy="100" r="40" cx="650"></circle>
+                </g> -->
+            </svg>
 
-        <h1 id="test"></h1>
-        <button onclick="showBinary()">Show Binary</button>
-        <button onclick="newNote()">New Note</button>
-        <button onclick="checkNote()">Check Note</button>
-        <button onclick="showCorrectNote()">Show Note</button>
+            <h1 id="test"></h1>
+            <button onclick="showBinary()">Show Binary</button>
+            <button onclick="newNote()">New Note</button>
+            <button onclick="checkNote()">Check Note</button>
+            <button onclick="showCorrectNote()">Show Note</button>
+        </div>
     </div>
 
     <script src="./Brass.js"></script>

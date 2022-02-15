@@ -1,3 +1,13 @@
 #fingering-app {
     display: none;
 }
+
+#staffArea {
+    float: left;
+    margin: 5px;
+}
+
+#userInput {
+    float: left;
+    margin: 5px;
+}
